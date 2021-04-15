@@ -13,16 +13,23 @@ InputField.propTypes = {
 
 function InputField(props) {
   const { form, name, label, disabled } = props;
+  const { formState } = form;
+  // console.log();
+  // const messagesError = formState.touchedFields[name] && formState.errors[name];
   return (
-    <Controller
-      render={({ field }) => <TextField {...field} />}
-      name={name}
-      control={form.control}
-      label={label}
-      fullWidth
-    >
-      {/* <TextField fullWidth/> */}
-    </Controller>
+    <>
+      <Controller
+        render={({ field }) => <TextField {...field} />}
+        name={name}
+        control={form.control}
+        label={label}
+        fullWidth
+        disabled={disabled}
+        // !! là phủ định
+      >
+      </Controller>
+      <p>{formState.errors[name]?.message}</p>
+    </>
   );
 }
 
