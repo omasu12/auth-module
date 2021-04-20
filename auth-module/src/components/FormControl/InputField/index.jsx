@@ -9,26 +9,34 @@ InputField.propTypes = {
 
   label: PropTypes.string,
   disabled: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 function InputField(props) {
-  const { form, name, label, disabled } = props;
+  const { form, name, label, disabled, type } = props;
   const { formState } = form;
-  // console.log();
-  // const messagesError = formState.touchedFields[name] && formState.errors[name];
+  const messagesError = formState.errors[name];
+  console.log(formState);
   return (
     <>
       <Controller
-        render={({ field }) => <TextField {...field} />}
+        render={({ field }) => (
+          <TextField
+            label={label}
+            type={type}
+            variant="outlined"
+            error={messagesError}
+            fullWidth
+            helperText={formState.errors[name]?.message}
+            margin="normal"
+            {...field}
+          />
+        )}
         name={name}
         control={form.control}
-        label={label}
-        fullWidth
         disabled={disabled}
-        // !! là phủ định
-      >
-      </Controller>
-      <p>{formState.errors[name]?.message}</p>
+        // !! là phủ định ?.là syntax
+      ></Controller>
     </>
   );
 }

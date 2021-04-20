@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -56,7 +55,9 @@ export default function Header() {
           <NavLink className={classes.link} to="hanime">
             <Button color="inherit">Hanime.tv</Button>
           </NavLink>
-          <Button onClick={handleClickOpen} color="inherit">Register</Button>
+          <Button onClick={handleClickOpen} color="inherit">
+            Register
+          </Button>
         </Toolbar>
       </AppBar>
 
@@ -67,7 +68,6 @@ export default function Header() {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
         <DialogContent>
           <Register />
         </DialogContent>
