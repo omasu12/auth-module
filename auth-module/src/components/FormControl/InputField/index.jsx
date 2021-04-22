@@ -16,7 +16,6 @@ function InputField(props) {
   const { form, name, label, disabled, type } = props;
   const { formState } = form;
   const messagesError = formState.errors[name];
-  console.log(formState);
   return (
     <>
       <Controller

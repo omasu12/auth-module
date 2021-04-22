@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Avatar, Button, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Button, LinearProgress, makeStyles, Typography } from '@material-ui/core';
 import { LockOutlined } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -13,6 +13,7 @@ RegisterForm.propTypes = {
 };
 const useStyles = makeStyles((theme) => ({
   root: {
+    position:'relative',
     paddingTop: theme.spacing(2),
   },
 
@@ -29,6 +30,13 @@ const useStyles = makeStyles((theme) => ({
     padding: '5 10',
     margin: theme.spacing(3, 0, 2, 0),
   },
+  progress :{
+    position:'absolute',
+    top: '-10px',
+    left:0,
+    right:0,
+
+  }
 }));
 
 function RegisterForm(props) {
@@ -54,17 +62,18 @@ function RegisterForm(props) {
     },
     resolver: yupResolver(schema),
   });
-  const handleForm = (values) => {
+  const handleForm = async (values) => {
     const { onSubmit } = props;
     if (onSubmit) {
-      // onSubmit(values);
-      console.log(values);
+     await onSubmit(values);
     }
     form.reset();
   };
+  const {isSubmitting} = form.formState;
   return (
     // form.handleSubmit là hàm có sẵn của hook-form
     <div className={classes.root}>
+      {isSubmitting &&  <LinearProgress className={classes.progress} />}
       <Avatar className={classes.avatar}>
         <LockOutlined />
       </Avatar>
@@ -78,6 +87,7 @@ function RegisterForm(props) {
         <PasswordField name="reTypePassword" label="Enter password" type="password" form={form} />
 
         <Button
+        disabled={isSubmitting}
           type="submit"
           fullWidth
           color="primary"
