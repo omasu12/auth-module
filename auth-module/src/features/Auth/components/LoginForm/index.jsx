@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import InputField from '../../../../components/FormControl/InputField';
 import PasswordField from '../../../../components/FormControl/PasswordField';
 
-RegisterForm.propTypes = {
+LoginForm.propTypes = {
   onSubmit: PropTypes.func,
 };
 const useStyles = makeStyles((theme) => ({
@@ -38,32 +38,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function RegisterForm(props) {
+function LoginForm(props) {
   const schema = yup.object().shape({
-    fullName: yup
-      .string()
-      .required('Please enter full name.')
-      // test là hàm custom validation follow me
-      .test('should has at least two words', 'Please enter at least two words', (values) => {
-        return values.split(' ').length >= 2;
-      }),
-    email: yup.string().required('Please enter title').email('Please enter email'),
+    identifier: yup.string().required('Please enter title').email('Please enter email'),
     password: yup
       .string()
       .required('Please enter your password')
       .min(5, 'Please enter at least 6 characters'),
-    reTypePassword: yup
-      .string()
-      .required('Please retype your password')
-      .oneOf([yup.ref('password')], 'Password does not match'),
   });
   const classes = useStyles();
   const form = useForm({
     defaultValues: {
-      fullName: '',
-      email: '',
+      identifier: '',
       password: '',
-      reTypePassword: '',
     },
     resolver: yupResolver(schema),
   });
@@ -75,8 +62,6 @@ function RegisterForm(props) {
     form.reset();
   };
   const { isSubmitting } = form.formState;
-
-  // const handleOpenLogin = () => {};
   return (
     // form.handleSubmit là hàm có sẵn của hook-form
     <div className={classes.root}>
@@ -85,13 +70,11 @@ function RegisterForm(props) {
         <LockOutlined />
       </Avatar>
       <Typography className={classes.title} component="h3" variant="h6">
-        Create An Account
+        Sign In
       </Typography>
       <form onSubmit={form.handleSubmit(handleForm)}>
-        <InputField name="fullName" label="Fullname" type="text" form={form} />
-        <InputField name="email" label="Email" type="email" form={form} />
+        <InputField name="identifier" label="Email" type="email" form={form} />
         <PasswordField name="password" label="Password" type="password" form={form} />
-        <PasswordField name="reTypePassword" label="Enter password" type="password" form={form} />
 
         <Button
           disabled={isSubmitting}
@@ -101,13 +84,11 @@ function RegisterForm(props) {
           variant="contained"
           className={classes.submit}
         >
-          Create an account
+         Sign in
         </Button>
-
-        {/* <Button onClick={handleOpenLogin}>Login</Button> */}
       </form>
     </div>
   );
 }
 
-export default RegisterForm;
+export default LoginForm;

@@ -1,17 +1,20 @@
-import { IconButton } from '@material-ui/core';
+import { Box, IconButton, Menu, MenuItem } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { Close } from '@material-ui/icons';
+import { AccountCircle, Close } from '@material-ui/icons';
 import CodeOutlinedIcon from '@material-ui/icons/CodeOutlined';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
+import Login from '../../features/Auth/components/Login';
 import Register from '../../features/Auth/components/Register';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../features/Auth/userSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,24 +30,44 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     textDecoration: 'none',
   },
-  closeBtn:{
-    position:'absolute',
-    top:theme.spacing(1),
-    right:theme.spacing(1),
-    zIndex:1,
-    color:theme.palette.grey,
-  }
+  closeBtn: {
+    position: 'absolute',
+    top: theme.spacing(1),
+    right: theme.spacing(1),
+    zIndex: 1,
+    color: theme.palette.grey,
+  },
 }));
-
+const StatusDialog = {
+  LOGIN: 'login',
+  REGISTER: 'register',
+};
 export default function Header() {
+  const loginUser = useSelector((state) => state.user.current);
+  const isLogin = !!loginUser.id;
   const [open, setOpen] = useState(false);
-
+  const [mode, setMode] = useState(StatusDialog.LOGIN);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const dispatch = useDispatch();
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleUserClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    const action = logout();
+    dispatch(action);
   };
   const classes = useStyles();
 
@@ -64,11 +87,38 @@ export default function Header() {
           <NavLink className={classes.link} to="hanime">
             <Button color="inherit">Hanime.tv</Button>
           </NavLink>
-          <Button onClick={handleClickOpen} color="inherit">
-            Register
-          </Button>
+          {!isLogin && (
+            <Button onClick={handleClickOpen} color="inherit">
+              Login
+            </Button>
+          )}
+          {isLogin && (
+            <Button color="inherit" onClick={handleUserClick}>
+              <AccountCircle />
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
+
+      <Menu
+        keepMounted
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        getContentAnchorEl={null}
+      >
+        <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      </Menu>
 
       <Dialog
         disableBackdropClick
@@ -81,7 +131,29 @@ export default function Header() {
           <Close></Close>
         </IconButton>
         <DialogContent>
-          <Register closeDialog={handleClose}/>
+          {mode === StatusDialog.REGISTER && (
+            <>
+              <Register closeDialog={handleClose} />
+
+              <Box textAlign="center">
+                <Button color="primary" onClick={() => setMode(StatusDialog.LOGIN)}>
+                  Already have an account. Login in
+                </Button>
+              </Box>
+            </>
+          )}
+
+          {mode === StatusDialog.LOGIN && (
+            <>
+              <Login closeDialog={handleClose} />
+
+              <Box textAlign="center">
+                <Button color="primary" onClick={() => setMode(StatusDialog.REGISTER)}>
+                  Don't have an account, Register
+                </Button>
+              </Box>
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </div>
