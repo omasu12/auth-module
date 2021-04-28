@@ -1,6 +1,6 @@
 import axiosClient from "./axiosClient";
 
-const demoApi = {
+const category = {
     getAll(param){
         const url = '/categories';
         return axiosClient.get(url,{param})
@@ -24,4 +24,4 @@ const demoApi = {
 };
 
 
-export default demoApi;
+export default category;
