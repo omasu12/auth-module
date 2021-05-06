@@ -1,12 +1,8 @@
+import { Box } from '@material-ui/core';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Route, Switch, useRouteMatch } from 'react-router';
 import ListPages from './pages/ListPages';
-import { Box } from '@material-ui/core';
 
-ProductsFeatures.propTypes = {
-    
-};
 
 function ProductsFeatures(props) {
     const match = useRouteMatch();

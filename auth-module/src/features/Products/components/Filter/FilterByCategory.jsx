@@ -7,11 +7,29 @@ FilterByCategory.propTypes = {
   onChange: PropTypes.func,
 };
 
-const useStyle = makeStyles(theme=>({
-  root:{},
+const useStyle = makeStyles((theme) => ({
+  root: {
+    padding:theme.spacing(2)
+  },
 
+  menu: {
+    padding: 0,
+    margin: 0,
+    listStyle: 'none',
 
-}))
+    '&>li': {
+      margin:theme.spacing(1),
+
+      '&:hover':{
+        cursor:'pointer',
+      }
+    },
+  },
+  cap: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+}));
 function FilterByCategory({ onChange }) {
   const [listCate, setListCate] = useState([]);
   const classes = useStyle();
@@ -34,9 +52,9 @@ function FilterByCategory({ onChange }) {
     if (onChange) onChange(category.id);
   };
   return (
-    <Box>
-      <Typography>Danh mục sản phẩm</Typography>
-      <ul>
+    <Box className={classes.root}>
+      <Typography className={classes.cap}>Danh mục sản phẩm</Typography>
+      <ul className={classes.menu}>
         {listCate.map((category) => (
           <li key={category.id} onClick={() => handleClickCategory(category)}>
             {category.name}

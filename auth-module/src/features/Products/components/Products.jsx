@@ -1,5 +1,4 @@
 import { Box, Typography } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { DEFAULT_IMAGE, STATIC_HOST } from '../../../constants/index';
