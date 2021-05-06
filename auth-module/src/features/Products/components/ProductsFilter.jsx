@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import FilterByCategory from './Filter/FilterByCategory';
@@ -20,7 +20,6 @@ function ProductsFilter({ filters, onChange }) {
   };
   return (
     <Box>
-      <Typography>Danh mục sản phẩm</Typography>
       <FilterByCategory onChange={handleChangeCategory} />
     </Box>
   );

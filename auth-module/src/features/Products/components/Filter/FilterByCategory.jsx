@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import category from '../../../../api/category';
@@ -7,8 +7,14 @@ FilterByCategory.propTypes = {
   onChange: PropTypes.func,
 };
 
+const useStyle = makeStyles(theme=>({
+  root:{},
+
+
+}))
 function FilterByCategory({ onChange }) {
   const [listCate, setListCate] = useState([]);
+  const classes = useStyle();
   useEffect(() => {
     try {
       (async () => {
@@ -29,6 +35,7 @@ function FilterByCategory({ onChange }) {
   };
   return (
     <Box>
+      <Typography>Danh mục sản phẩm</Typography>
       <ul>
         {listCate.map((category) => (
           <li key={category.id} onClick={() => handleClickCategory(category)}>
