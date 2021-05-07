@@ -33,6 +33,7 @@ const useStyle = makeStyles((theme) => ({
 function FilterByCategory({ onChange }) {
   const [listCate, setListCate] = useState([]);
   const classes = useStyle();
+  console.log('s');
   useEffect(() => {
     try {
       (async () => {

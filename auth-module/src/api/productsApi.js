@@ -1,3 +1,4 @@
+import { useControlled } from '@material-ui/core';
 import axiosClient from './axiosClient';
 
 const productApi = {
@@ -21,5 +22,10 @@ const productApi = {
       },
     };
   },
+
+  getNameCategoryById(id){
+    const url = `/categories/${id}`;
+    return axiosClient.get(url)
+}
 };
 export default productApi;
