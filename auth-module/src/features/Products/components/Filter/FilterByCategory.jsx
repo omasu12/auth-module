@@ -5,6 +5,7 @@ import category from '../../../../api/category';
 
 FilterByCategory.propTypes = {
   onChange: PropTypes.func,
+  filter:PropTypes.object,
 };
 
 const useStyle = makeStyles((theme) => ({
@@ -29,11 +30,14 @@ const useStyle = makeStyles((theme) => ({
     textAlign: 'center',
     fontWeight: 'bold',
   },
+  active:{
+    background:'#333',
+    color:'#fff'
+  }
 }));
-function FilterByCategory({ onChange }) {
+function FilterByCategory({ onChange,filter }) {
   const [listCate, setListCate] = useState([]);
   const classes = useStyle();
-  console.log('s');
   useEffect(() => {
     try {
       (async () => {
@@ -57,7 +61,7 @@ function FilterByCategory({ onChange }) {
       <Typography className={classes.cap}>Danh mục sản phẩm</Typography>
       <ul className={classes.menu}>
         {listCate.map((category) => (
-          <li key={category.id} onClick={() => handleClickCategory(category)}>
+          <li key={category.id} className={category.id == filter['category.id'] ? classes.active :''} onClick={() => handleClickCategory(category)}>
             {category.name}
           </li>
         ))}

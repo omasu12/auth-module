@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Chip, makeStyles } from '@material-ui/core';
 import productApi from '../../../api/productsApi';
@@ -69,32 +69,36 @@ const Filter_List = [
     },
     onToggle: () => {},
   },
-  {
-    id: 4,
-    getLabel:async (filter, data) => {
-      const dataCate = await productApi.getNameCategoryById(filter['category.id'])
-      console.log(dataCate.data);
-      // return dataCate[0].name
-    },
-    isActive: () => true,
-    isVisible: (filter) => {
-      return Object.keys(filter).includes('category.id');
-    },
-    isRemovable: true,
-    onRemove: (filter) => {
-      const newFilter = { ...filter };
-      delete newFilter['category.id'];
-      return newFilter;
-    },
-    onToggle: () => {},
-  },
+  // {
+  //   id: 4,
+  //   getLabel:async (filter, data) => {
+  //     const dataCate = await productApi.getNameCategoryById(filter['category.id'])
+  //     console.log(dataCate.data);
+  //     // return dataCate[0].name
+  //   },
+  //   isActive: () => true,
+  //   isVisible: (filter) => {
+  //     return Object.keys(filter).includes('category.id');
+  //   },
+  //   isRemovable: true,
+  //   onRemove: (filter) => {
+  //     const newFilter = { ...filter };
+  //     delete newFilter['category.id'];
+  //     return newFilter;
+  //   },
+  //   onToggle: () => {},
+  // },
 ];
 
 function FilterView({ onChange = null, filter = {}, data }) {
   const classes = useStyles();
+
+  const visibleFilter = useMemo(()=>{
+    return Filter_List.filter((x) => x.isVisible(filter))
+  },[filter])
   return (
     <Box component="ul" className={classes.root}>
-      {Filter_List.filter((x) => x.isVisible(filter)).map((x) => (
+      {visibleFilter.map((x) => (
         <li key={x.id}>
           <Chip
             label={x.getLabel(filter, data)}
