@@ -1,7 +1,6 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Box, Chip, makeStyles } from '@material-ui/core';
-import productApi from '../../../api/productsApi';
+import PropTypes from 'prop-types';
+import React, { useMemo } from 'react';
 FilterView.propTypes = {
   onChange: PropTypes.func,
   filter: PropTypes.object,

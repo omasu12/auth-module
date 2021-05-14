@@ -61,7 +61,7 @@ function FilterByCategory({ onChange,filter }) {
       <Typography className={classes.cap}>Danh mục sản phẩm</Typography>
       <ul className={classes.menu}>
         {listCate.map((category) => (
-          <li key={category.id} className={category.id == filter['category.id'] ? classes.active :''} onClick={() => handleClickCategory(category)}>
+          <li key={category.id} className={category.id === filter['category.id'] ? classes.active :''} onClick={() => handleClickCategory(category)}>
             {category.name}
           </li>
         ))}

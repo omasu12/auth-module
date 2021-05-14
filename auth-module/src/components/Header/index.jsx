@@ -81,13 +81,13 @@ export default function Header() {
               Home
             </Link>
           </Typography>
-          <NavLink className={classes.link} to="hentaiz">
+          <NavLink className={classes.link} to="/hentaiz" exact>
             <Button color="inherit">Hanime.tv</Button>
           </NavLink>
-          <NavLink className={classes.link} to="hanime">
+          <NavLink className={classes.link} to="/hanime" exact>
             <Button color="inherit">Hanime.tv</Button>
           </NavLink>
-          <NavLink className={classes.link} to="products">
+          <NavLink className={classes.link} to="/products" exact>
             <Button color="inherit">Products</Button>
           </NavLink>
           {!isLogin && (
