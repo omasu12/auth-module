@@ -1,5 +1,6 @@
 import { Route, Switch } from 'react-router';
 import Header from './components/Header';
+import CartFeature from './features/Cart';
 import Hanime from './features/Hanime.tv';
 import Hentaiz from './features/Hentaiz.net';
 import ProductsFeatures from './features/Products';
@@ -24,6 +25,9 @@ function App() {
           </Route>
           <Route path='/products/:productID' exact>
             <DetailPage />
+          </Route>
+          <Route path='/cart' exact>
+            <CartFeature />
           </Route>
       </Switch>
     </div>

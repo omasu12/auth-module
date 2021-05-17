@@ -1,7 +1,9 @@
 import { Box, Container, Grid, makeStyles, Paper } from '@material-ui/core';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router';
 import AddToCartForm from '../components/AddToCartForm';
+import { addToCart } from '../../Cart/cartSlice';
 import ProductsAdditional from '../components/ProductsAdditional';
 import ProductsDescription from '../components/ProductsDescription';
 import ProductsDetailTab from '../components/ProductsDetailTab';
@@ -26,14 +28,18 @@ const useStyles = makeStyles((theme) => ({
 function DetailPage() {
   const classes = useStyles();
   const match = useRouteMatch();
-  console.log(match.params.productID);
   const { products, loading } = useProduct(match.params.productID);
-  console.log(match.url);
+  const dispatch = useDispatch();
   if (loading) {
     return <Box>Loading</Box>;
   }
   const handleSubmitCart = (values) => {
-    console.log(values, 'cart');
+    const action = addToCart({
+      id: products.id,
+      products,
+      quantity: values.quantity,
+    });
+    dispatch(action)
   };
   return (
     <Box>
@@ -46,18 +52,18 @@ function DetailPage() {
             <Grid item className={classes.right}>
               <ProductsInfo products={products} />
 
-              <AddToCartForm onSubmit={handleSubmitCart}/>
+              <AddToCartForm onSubmit={handleSubmitCart} />
             </Grid>
           </Grid>
         </Paper>
 
-        <ProductsDetailTab/>
+        <ProductsDetailTab />
 
         <Switch>
           <Route path={match.url} exact>
-              <ProductsDescription products={products} />
+            <ProductsDescription products={products} />
           </Route>
-          <Route path={`${match.url}/additional`} component={ProductsAdditional} exact/>
+          <Route path={`${match.url}/additional`} component={ProductsAdditional} exact />
         </Switch>
       </Container>
     </Box>
