@@ -15,6 +15,7 @@ import Login from '../../features/Auth/components/Login';
 import Register from '../../features/Auth/components/Register';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../features/Auth/userSlice';
+import { cartItemsCountSelector } from '../../features/Cart/selector';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +49,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(StatusDialog.LOGIN);
   const [anchorEl, setAnchorEl] = useState(null);
+  const countItemCart = useSelector(cartItemsCountSelector);
   const dispatch = useDispatch();
   const handleClickOpen = () => {
     setOpen(true);
@@ -108,7 +110,6 @@ export default function Header() {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
-
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
