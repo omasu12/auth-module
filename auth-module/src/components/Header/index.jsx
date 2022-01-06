@@ -9,13 +9,11 @@ import Typography from '@material-ui/core/Typography';
 import { AccountCircle, Close } from '@material-ui/icons';
 import CodeOutlinedIcon from '@material-ui/icons/CodeOutlined';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import Login from '../../features/Auth/components/Login';
 import Register from '../../features/Auth/components/Register';
-import { useDispatch } from 'react-redux';
 import { logout } from '../../features/Auth/userSlice';
-import { cartItemsCountSelector } from '../../features/Cart/selector';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +47,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(StatusDialog.LOGIN);
   const [anchorEl, setAnchorEl] = useState(null);
-  const countItemCart = useSelector(cartItemsCountSelector);
+  // const countItemCart = useSelector(cartItemsCountSelector);
   const dispatch = useDispatch();
   const handleClickOpen = () => {
     setOpen(true);
